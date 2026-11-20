@@ -5,8 +5,12 @@ class ThoughtsPage {
         return $('//*[@data-testid="public-posts-page"]');
     }
 
-    public get firstPhilosopherPostCard() {
-        return $('//*[@data-testid="public-posts-page"]//a[contains(@href, "/philosopher/")]');
+    public get philosopherPostCardsGrid() {
+        return $('//*[@data-testid="public-posts-cards"]');
+    }
+
+    philosopherCard(index: number) {
+        return $(`//*[@data-testid="public-post-${index}-philosopher-link"]`);
     }
 }
 

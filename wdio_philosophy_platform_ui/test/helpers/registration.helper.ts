@@ -3,7 +3,7 @@ import RegistrationPage from '../pageobjects/registration.page.js';
 class RegistrationHelper {
     /** Create an address unique to this run and suitable for reuse across a user story. */
     public createUniqueEmail(): string {
-        return `ui+${Date.now()}@example.com`;
+        return `ui${Date.now()}@example.com`;
     }
 
     /** Submit a valid registration using the registration page object locators. */

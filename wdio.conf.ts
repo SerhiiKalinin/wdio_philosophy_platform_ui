@@ -4,8 +4,14 @@ export const config: WebdriverIO.Config = {
         const { default: browserHelper } = await import('./wdio_philosophy_platform_ui/test/helpers/browser.helper.js');
         await browserHelper.openPageForSuite(suite.title);
     },
-    afterTest: async () => {
-        const { default: browserHelper } = await import('./wdio_philosophy_platform_ui/test/helpers/browser.helper.js');
+    afterTest: async function (test, context, { error }) {
+        if (error) {
+            await browser.takeScreenshot();
+        }
+
+        const { default: browserHelper } = await import(
+            './wdio_philosophy_platform_ui/test/helpers/browser.helper.js'
+        );
         await browserHelper.clearSession();
     },
     //
@@ -139,7 +145,12 @@ export const config: WebdriverIO.Config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec', 'allure'],
+    reporters: [
+        ['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverScreenshotsReporting: false,
+        }],
+    ],
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
