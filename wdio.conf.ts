@@ -9,10 +9,10 @@ export const config: WebdriverIO.Config = {
             await browser.takeScreenshot();
         }
 
-        const { default: browserHelper } = await import(
-            './wdio_philosophy_platform_ui/test/helpers/browser.helper.js'
-        );
-        await browserHelper.clearSession();
+        // const { default: browserHelper } = await import(
+        //     './wdio_philosophy_platform_ui/test/helpers/browser.helper.js'
+        // );
+        //await browserHelper.clearSession();
     },
     //
     // ====================

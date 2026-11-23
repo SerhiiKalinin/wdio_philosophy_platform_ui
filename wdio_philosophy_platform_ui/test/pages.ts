@@ -5,6 +5,7 @@ export const pages = {
     registration: '/?register=1#registration-email-field',
     overview: '/overview',
     thoughts: '/posts',
+    settings: '/settings',
     philosopher: (id: string | number) => `/philosopher/${id}`,
 } as const;
 

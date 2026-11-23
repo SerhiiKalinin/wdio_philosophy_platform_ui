@@ -23,6 +23,11 @@ class CommonHelper {
         await button.click();
         await expect(browser).toHaveUrl(expect.stringContaining(url));
     }
+
+    public async verifyElementHasValue(element: ChainablePromiseElement, value: string): Promise<void> {
+        await expect(element).toBeDisplayed();
+        await expect(element).toHaveValue(value);
+    }
 }
 
 export default new CommonHelper();
