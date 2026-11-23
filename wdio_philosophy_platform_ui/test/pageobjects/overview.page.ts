@@ -1,4 +1,5 @@
 import { $ } from '@wdio/globals';
+import { $$ } from '@wdio/globals';
 
 class OverviewPage {
     public get page() {
@@ -20,6 +21,10 @@ class OverviewPage {
     public get emptyStateCta() {
         return $('//*[@data-testid="overview-empty-action"]');
     }
+
+    public get philosopherLinks() {
+        return $$('//*[contains(@data-testid, "-philosopher-link")]');
+    }     
 }
 
 export default new OverviewPage();

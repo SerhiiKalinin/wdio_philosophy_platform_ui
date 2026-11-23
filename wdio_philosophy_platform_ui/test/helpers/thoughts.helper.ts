@@ -3,7 +3,7 @@ import ThoughtsPage from '../pageobjects/thoughts.page.js';
 class ThoughtsHelper {
     /** Read the philosopher ID from the first post card's link. */
     public async getFirstPhilosopherId(): Promise<string> {
-        const href = await ThoughtsPage.firstPhilosopherPostCard.getAttribute('href');
+        const href = await ThoughtsPage.philosopherCard(1).getAttribute('href');
         const philosopherId = href?.match(/\/philosopher\/([^/?#]+)/)?.[1];
 
         if (!philosopherId) {

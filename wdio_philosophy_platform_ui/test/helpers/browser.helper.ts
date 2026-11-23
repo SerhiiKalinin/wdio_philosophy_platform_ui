@@ -8,7 +8,7 @@ const suitePages: Record<string, PageName> = {
 
 class BrowserHelper {
     /** Prepare a test run by opening the baseUrl or a path relative to it. */
-    public async prepareTestRun(path = '/'): Promise<void> {
+    public async goToPage(path = '/'): Promise<void> {
         await browser.url(path);
     }
 

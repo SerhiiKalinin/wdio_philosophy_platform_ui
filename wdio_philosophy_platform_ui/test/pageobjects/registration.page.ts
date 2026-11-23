@@ -18,7 +18,7 @@ class RegistrationPage {
     }
 
     public get successState() {
-        return $('//*[@data-testid="registration-success"]');
+        return $('//*[@data-testid="registration-funnel-success"]');
     }
 
     public get successHeading() {
