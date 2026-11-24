@@ -1,6 +1,6 @@
 import OverviewPage from '../pageobjects/overview.page.ts';
 import {expect} from '@wdio/globals';
-import allure from '@wdio/allure-reporter';
+import allureReporter from '@wdio/allure-reporter';
 
 class OverviewHelper {
     public async verifyPhilosopherIds(philosopherId: number) {
@@ -13,6 +13,7 @@ class OverviewHelper {
             )
         );
         expect(philosopherIds.every(id => id === Number(philosopherId))).toBe(true);
+        allureReporter.addStep(`LOG: All post cards belong to philosopher with id='${philosopherId}'`);
     }
 }
 

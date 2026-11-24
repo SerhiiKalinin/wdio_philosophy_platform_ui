@@ -1,4 +1,5 @@
 import RegistrationPage from '../pageobjects/registration.page.js';
+import allureReporter from '@wdio/allure-reporter';
 
 class RegistrationHelper {
     /** Create an address unique to this run and suitable for reuse across a user story. */
@@ -12,6 +13,7 @@ class RegistrationHelper {
         await RegistrationPage.passwordInput.setValue(password);
         await RegistrationPage.passwordConfirmationInput.setValue(password);
         await RegistrationPage.submitButton.click();
+        allureReporter.addStep(`LOG: User submitted the registration form with valid credentials`);
     }
 }
 
