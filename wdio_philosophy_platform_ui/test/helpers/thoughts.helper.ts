@@ -1,4 +1,5 @@
 import ThoughtsPage from '../pageobjects/thoughts.page.js';
+import allureReporter from '@wdio/allure-reporter';
 
 class ThoughtsHelper {
     /** Read the philosopher ID from the first post card's link. */
@@ -9,7 +10,7 @@ class ThoughtsHelper {
         if (!philosopherId) {
             throw new Error('Could not read a philosopher ID from the first Thoughts post card');
         }
-
+        allureReporter.addStep(`LOG: philosopherId was extracted successfully: ${philosopherId}`);
         return philosopherId;
     }
 }
