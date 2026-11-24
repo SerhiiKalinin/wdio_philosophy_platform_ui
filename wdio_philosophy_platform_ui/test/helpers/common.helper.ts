@@ -36,6 +36,13 @@ class CommonHelper {
         await expect(element).toHaveValue(value);
         allureReporter.addStep(`LOG: Element has value='${value}'`);
     }
+
+    public async typeText(element: ChainablePromiseElement, text: string) {
+    for (const char of text) {
+        await element.addValue(char);
+        allureReporter.addStep(`LOG: character "${char}" added in input`);
+    }
+}
 }
 
 export default new CommonHelper();

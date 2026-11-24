@@ -11,6 +11,12 @@ class headerHelper {
         await commonHelper.verifyDisplayed(LoginPage.page);
         allureReporter.addStep(`LOG: User logged out`);
     }
+
+    public async openSearchInput(): Promise<void> {
+        await commonHelper.clickDisplayedButton(Header.searchButton);
+        await commonHelper.verifyDisplayed(Header.searchInput);
+        allureReporter.addStep(`LOG: Search input activated`);
+    }
 }
 
 export default new headerHelper();
