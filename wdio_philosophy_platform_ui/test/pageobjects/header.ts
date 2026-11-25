@@ -49,6 +49,22 @@ class Header {
     public get schoolsSuggestionOptions(){
         return $$('//*[contains(@data-testid, "site-header-school-suggestion-desktop-")]')
     }
+
+    public get philosopherListTitle(){
+        return $('//*[contains(@data-testid, "site-header-philosopher-suggestion-desktop-")]/preceding-sibling::*[@data-testid="site-header-philosopher-suggestions-title-desktop"]');
+    }
+
+    public get schoolsListTitle(){
+        return $('//*[contains(@data-testid, "site-header-school-suggestion-desktop-")]/preceding-sibling::*[@data-testid="site-header-school-suggestions-title-desktop"]');
+    }
+
+    public get allMatchedPhilosophersLink(){
+        return $('//*[@data-testid="site-header-see-all-philosophers-desktop"]');
+    }
+
+    public get allMatchedSchoolsLink(){
+        return $('//*[@data-testid="site-header-see-all-schools-desktop"]');
+    }
 }
 
 export default new Header();

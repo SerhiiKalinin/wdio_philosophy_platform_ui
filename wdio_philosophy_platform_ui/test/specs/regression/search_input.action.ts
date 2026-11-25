@@ -15,20 +15,30 @@ import {twoChars} from '../../constants/header.constants.ts'
 import {threeCharsEmpty} from '../../constants/header.constants.ts'
 import {threeCharsPhilosophers} from '../../constants/header.constants.ts'
 import {threeCharsSchools} from '../../constants/header.constants.ts'
+import {philosophersListTitle} from '../../constants/header.constants.ts'
+import {schoolsListTitle} from '../../constants/header.constants.ts'
+import {fiveCharsPhilosophers} from '../../constants/header.constants.ts'
+import {fiveCharsSchools} from '../../constants/header.constants.ts'
 import SettingsPage from '../../pageobjects/settings.page.ts';
 import philosopherHelper from '../../helpers/philosopher.helper.ts';
 import Header from '../../pageobjects/header.ts';
 
 describe('Search Input - Action Verifications - Regression', () => {
 
-    let philosopherId: any;
+    before(async () => {
+        await loginHelper.login(studentOverview, registrationPassword);
+    });
 
     beforeEach(async () => {
-        await loginHelper.login(studentOverview, registrationPassword);
+        await browserHelper.goToPage();
         await headerHelper.openSearchInput();
     });
 
     afterEach(async () => {
+        await browser.refresh();
+    });
+
+    after(async () => {
         await browserHelper.clearSession();
     });
 
@@ -51,13 +61,73 @@ describe('Search Input - Action Verifications - Regression', () => {
     });
 
     it('When there are philosopher results, the philosopher options are displayed.', async () => {
-        await commonHelper.typeText(Header.searchInput, threeCharsPhilosophers);
-        await commonHelper.verifyDisplayed(Header.philosophersSuggestionOptions[0]);
+        await headerHelper.openSearchInputAndWaitList(threeCharsPhilosophers, Header.philosophersSuggestionOptions[0]);
     });
 
     it('When there are school results, the school options are displayed.', async () => {
+        await headerHelper.openSearchInputAndWaitList(threeCharsSchools, Header.schoolsSuggestionOptions[0]);
+    });
+
+    it('Philosopher suggestions contain the characters entered in the input.', async () => {
+        await headerHelper.openSearchInputAndWaitList(threeCharsPhilosophers, Header.philosophersSuggestionOptions[0]);
+        await headerHelper.verifyListContainsSearchQuery(Header.philosophersSuggestionOptions, threeCharsPhilosophers);
+    });
+
+    it('School suggestions contain the characters entered in the input.', async () => {
+        await headerHelper.openSearchInputAndWaitList(threeCharsSchools, Header.schoolsSuggestionOptions[0]);
+        await headerHelper.verifyListContainsSearchQuery(Header.schoolsSuggestionOptions, threeCharsSchools);
+    });
+
+    it('Philosopher suggestions have the “Philosophers” label.', async () => {
+        await commonHelper.typeText(Header.searchInput, threeCharsPhilosophers);
+        await commonHelper.verifyElementHasText(Header.philosopherListTitle, philosophersListTitle);
+    });
+
+    it('School suggestions have the “Schools” label.', async () => {
         await commonHelper.typeText(Header.searchInput, threeCharsSchools);
-        await commonHelper.verifyDisplayed(Header.schoolsSuggestionOptions[0]);
+        await commonHelper.verifyElementHasText(Header.schoolsListTitle,schoolsListTitle);
+    });
+
+    it('When there are more than three philosopher suggestions, the “See all matched philosophers” link is displayed.', async () => {
+        await headerHelper.openSearchInputAndWaitList(threeCharsPhilosophers, Header.philosophersSuggestionOptions[0]);
+        await commonHelper.verifyDisplayed(Header.allMatchedPhilosophersLink);
+    });
+
+    it('When there are three or fewer philosopher suggestions, the “See all matched philosophers” link is not displayed.', async () => {
+        await headerHelper.openSearchInputAndWaitList(fiveCharsPhilosophers, Header.philosophersSuggestionOptions[0]);
+        await commonHelper.verifyDisplayed(Header.allMatchedPhilosophersLink, false);
+    });
+
+    it('When there are more than three school suggestions, the “See all matched schools” link is displayed.', async () => {
+        await headerHelper.openSearchInputAndWaitList(threeCharsSchools, Header.schoolsSuggestionOptions[0]);
+        await commonHelper.verifyDisplayed(Header.allMatchedSchoolsLink);
+    });
+
+    it('When there are three or fewer school suggestions, the “See all matched schools” link is not displayed.', async () => {
+        await headerHelper.openSearchInputAndWaitList(fiveCharsSchools, Header.schoolsSuggestionOptions[0]);
+        await commonHelper.verifyDisplayed(Header.allMatchedSchoolsLink, false);
+    });
+
+    it('Clicking the “See all matched philosophers” link navigates to the search results page with type=philosophers.', async () => {
+        await commonHelper.typeText(Header.searchInput, threeCharsPhilosophers);
+        await commonHelper.clickAndVerifyRedirect(Header.allMatchedPhilosophersLink, [pages.search, threeCharsPhilosophers, philosophersListTitle]);
+    });
+
+    it('Clicking the “See all matched schools” link navigates to the search results page with type=schools.', async () => {
+        await commonHelper.typeText(Header.searchInput, threeCharsSchools);
+        await commonHelper.clickAndVerifyRedirect(Header.allMatchedSchoolsLink, [pages.search, threeCharsSchools, schoolsListTitle]);
+    });
+
+    it('Clicking a philosopher suggestion navigates to the philosopher page.', async () => {
+        await commonHelper.typeText(Header.searchInput, threeCharsPhilosophers);
+        const philosopherId = await headerHelper.getEntityId(Header.philosophersSuggestionOptions[0]);
+        await commonHelper.clickAndVerifyRedirect(Header.philosophersSuggestionOptions[0], pages.philosopher(philosopherId));
+    });
+
+    it('Clicking a school suggestion navigates to the school page.', async () => {
+        await commonHelper.typeText(Header.searchInput, threeCharsSchools);
+        const schoolId = await headerHelper.getEntityId(Header.schoolsSuggestionOptions[0]);
+        await commonHelper.clickAndVerifyRedirect(Header.schoolsSuggestionOptions[0], pages.school(schoolId));
     });
 });
 

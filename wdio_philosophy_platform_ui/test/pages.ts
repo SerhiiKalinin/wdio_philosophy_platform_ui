@@ -6,7 +6,9 @@ export const pages = {
     overview: '/overview',
     thoughts: '/posts',
     settings: '/settings',
+    search: '/search',
     philosopher: (id: string | number) => `/philosopher/${id}`,
+    school: (id: string | number) => `/school/${id}`,
 } as const;
 
-export type PageName = Exclude<keyof typeof pages, 'philosopher'>;
+export type PageName = Exclude<keyof typeof pages, 'philosopher' | 'school'>;
