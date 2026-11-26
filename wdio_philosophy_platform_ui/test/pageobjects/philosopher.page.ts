@@ -5,6 +5,10 @@ class PhilosopherPage {
         return $('//*[@data-testid="public-philosopher-page"]');
     }
 
+    public get philosopherName(){
+        return $('//*[@data-testid="public-philosopher-title"]');
+    }
+
     public get followButton(){
         return $('//*[@data-testid="public-philosopher-follow-button"]');
     }

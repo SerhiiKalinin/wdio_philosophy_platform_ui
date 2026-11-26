@@ -1,4 +1,5 @@
 import { $ } from '@wdio/globals';
+import { $$ } from '@wdio/globals';
 
 class Header {
     public get logoutButton() {
@@ -15,6 +16,54 @@ class Header {
 
     public get settingsLink() {
         return $('//*[@data-testid="site-header-settings-link"]');
+    }
+
+    public get searchButton(){
+        return $('//*[@data-testid="site-header-search-open-desktop"]');
+    }
+
+    public get searchInput(){
+        return $('//*[@data-testid="site-header-search-input-desktop"]');
+    }
+
+    public get searchLoading(){
+        return $('//*[@data-testid="site-header-suggestions-loading-desktop"]');
+    }
+
+    public get searchNoResults(){
+        return $('//*[@data-testid="site-header-suggestions-empty-desktop"]');
+    }
+
+    public get suggestionsPhilosophersList(){
+        return $('//*[@data-testid="site-header-philosopher-suggestions-desktop"]');
+    }
+
+    public get suggestionsSchoolsList(){
+        return $('//*[@data-testid="site-header-school-suggestions-desktop"]');
+    }
+
+    public get philosophersSuggestionOptions(){
+        return $$('//*[contains(@data-testid, "site-header-philosopher-suggestion-desktop-")]')
+    }
+
+    public get schoolsSuggestionOptions(){
+        return $$('//*[contains(@data-testid, "site-header-school-suggestion-desktop-")]')
+    }
+
+    public get philosopherListTitle(){
+        return $('//*[contains(@data-testid, "site-header-philosopher-suggestion-desktop-")]/preceding-sibling::*[@data-testid="site-header-philosopher-suggestions-title-desktop"]');
+    }
+
+    public get schoolsListTitle(){
+        return $('//*[contains(@data-testid, "site-header-school-suggestion-desktop-")]/preceding-sibling::*[@data-testid="site-header-school-suggestions-title-desktop"]');
+    }
+
+    public get allMatchedPhilosophersLink(){
+        return $('//*[@data-testid="site-header-see-all-philosophers-desktop"]');
+    }
+
+    public get allMatchedSchoolsLink(){
+        return $('//*[@data-testid="site-header-see-all-schools-desktop"]');
     }
 }
 
