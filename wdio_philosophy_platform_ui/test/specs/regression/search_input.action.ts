@@ -1,13 +1,8 @@
 import browserHelper from '../../helpers/browser.helper.js';
 import loginHelper from '../../helpers/login.helper.js';
 import commonHelper from '../../helpers/common.helper.js';
-import thoughtsHelper from '../../helpers/thoughts.helper.js';
 import PhilosopherPage from '../../pageobjects/philosopher.page.ts';
-import OverviewPage from '../../pageobjects/overview.page.js';
-import overviewHelper from '../../helpers/overview.helper.ts';
 import headerHelper from '../../helpers/header.helper.ts';
-import ThoughtsPage from '../../pageobjects/thoughts.page.js';
-import LoginPage from '../../pageobjects/login.page.js';
 import {pages} from '../../pages.js';
 import {registrationPassword} from '../../constants/registration.constants.ts';
 import {studentOverview} from '../../constants/login.constants.ts';
@@ -19,8 +14,9 @@ import {philosophersListTitle} from '../../constants/header.constants.ts'
 import {schoolsListTitle} from '../../constants/header.constants.ts'
 import {fiveCharsPhilosophers} from '../../constants/header.constants.ts'
 import {fiveCharsSchools} from '../../constants/header.constants.ts'
-import SettingsPage from '../../pageobjects/settings.page.ts';
-import philosopherHelper from '../../helpers/philosopher.helper.ts';
+import {philosopherNameExact} from '../../constants/header.constants.ts'
+import {schoolNameExact} from '../../constants/header.constants.ts'
+import SchoolPage from '../../pageobjects/school.page.ts';
 import Header from '../../pageobjects/header.ts';
 
 describe('Search Input - Action Verifications - Regression', () => {
@@ -128,6 +124,34 @@ describe('Search Input - Action Verifications - Regression', () => {
         await commonHelper.typeText(Header.searchInput, threeCharsSchools);
         const schoolId = await headerHelper.getEntityId(Header.schoolsSuggestionOptions[0]);
         await commonHelper.clickAndVerifyRedirect(Header.schoolsSuggestionOptions[0], pages.school(schoolId));
+    });
+
+    it('When the search query exactly matches a philosopher`s name, pressing Enter navigates to the philosopher page.', async () => {
+        await commonHelper.typeText(Header.searchInput, philosopherNameExact);
+        await commonHelper.verifyElementHasText(Header.philosophersSuggestionOptions[0], philosopherNameExact);
+        const philosopherId = await headerHelper.getEntityId(Header.philosophersSuggestionOptions[0]);
+        await commonHelper.submitWithEnterAndVerifyRedirect(pages.philosopher(philosopherId));
+    });
+
+    it('The philosopher`s name matches the search query exactly on the philosopher page.', async () => {
+        await commonHelper.typeText(Header.searchInput, philosopherNameExact);
+        await commonHelper.verifyElementHasText(Header.philosophersSuggestionOptions[0], philosopherNameExact);
+        await browser.keys('Enter');
+        await commonHelper.verifyElementHasText(PhilosopherPage.philosopherName, philosopherNameExact);
+    });
+
+    it('When the search query exactly matches a school`s name, pressing Enter navigates to the school page.', async () => {
+        await commonHelper.typeText(Header.searchInput, schoolNameExact);
+        await commonHelper.verifyElementHasText(Header.schoolsSuggestionOptions[0], schoolNameExact);
+        const schoolId = await headerHelper.getEntityId(Header.schoolsSuggestionOptions[0]);
+        await commonHelper.submitWithEnterAndVerifyRedirect(pages.school(schoolId));
+    });
+
+    it('The school`s name matches the search query exactly on the school page.', async () => {
+        await commonHelper.typeText(Header.searchInput, schoolNameExact);
+        await commonHelper.verifyElementHasText(Header.schoolsSuggestionOptions[0], schoolNameExact);
+        await browser.keys('Enter');
+        await commonHelper.verifyElementHasText(SchoolPage.schoolName, schoolNameExact);
     });
 });
 

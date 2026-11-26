@@ -3,6 +3,7 @@ import {expect} from '@wdio/globals';
 import allureReporter from '@wdio/allure-reporter';
 
 class OverviewHelper {
+    
     public async verifyPhilosopherIds(philosopherId: number) {
         const philosopherLinks = await OverviewPage.philosopherLinks;
         expect(philosopherLinks.length).toBeGreaterThan(0);

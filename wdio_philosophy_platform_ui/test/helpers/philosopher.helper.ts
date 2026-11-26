@@ -3,6 +3,7 @@ import commonHelper from './common.helper.ts';
 import allureReporter from '@wdio/allure-reporter';
 
 class philosopherHelper {
+    
     public async followPhilosopher(follow: boolean): Promise<void> {
         if (follow) {
             await commonHelper.clickDisplayedButton(PhilosophernPage.followButton);
